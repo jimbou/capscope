@@ -1,0 +1,17 @@
+# CapScope — project website
+
+The public research page for *Authority Is Not a String: A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents*, submitted to the LMPL Workshop 2026.
+
+`capscope.tex` is the source of truth for paper claims and evaluation results. `paper.pdf` and `slides.pdf` provide stable public links to the supplied paper and presentation. Code, tasks, and evaluation artifacts are available in the [CapScope repository](https://github.com/msv-lab/CapScope).
+
+## Preview locally
+
+```bash
+python3 -m http.server 8080
+```
+
+Open <http://localhost:8080>. Run `npm test` to check the public-page contract and GitHub Pages workflow.
+
+## Deployment
+
+`.github/workflows/pages.yml` publishes the repository root after relevant commits reach `main`. In the repository’s GitHub Pages settings, select **GitHub Actions** as the build and deployment source.
