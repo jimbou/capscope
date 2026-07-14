@@ -1,6 +1,6 @@
 # CapScope — project website
 
-The public research page for *Authority Is Not a String: A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents*, submitted to the LMPL Workshop 2026.
+The public research page for *Authority Is Not a String: A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents*, currently under submission.
 
 `capscope.tex` is the source of truth for paper claims and evaluation results. `paper.pdf` provides a stable public link to the supplied paper. Code, tasks, and evaluation artifacts are available in the [CapScope repository](https://github.com/msv-lab/CapScope).
 

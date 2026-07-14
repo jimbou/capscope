@@ -11,7 +11,7 @@ test("page contains the approved CapScope content", async () => {
   const required = [
     "CapScope",
     "CapScope:",
-    "Submitted to LMPL 2026",
+    "Under submission",
     "Authority Is Not a String",
     "A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents",
     "Dimitrios Stamatios Bouras",
@@ -36,7 +36,7 @@ test("page contains the approved CapScope content", async () => {
   for (const value of required) {
     assert.match(html, new RegExp(escapeRegex(value)));
   }
-  assert.doesNotMatch(html, /Gordian|ISSTA|2603\.19239/i);
+  assert.doesNotMatch(html, /Gordian|ISSTA|LMPL|workshop|2603\.19239/i);
 });
 
 test("page exposes the paper and required site assets without a slides link", async () => {
@@ -70,17 +70,22 @@ test("page keeps the template accessibility and interaction hooks", async () => 
   assert.match(script, /prefers-reduced-motion/);
 });
 
-test("Pages workflow deploys the repository root", async () => {
+test("Pages workflow deploys only the staged public site", async () => {
   const workflow = await read(".github/workflows/pages.yml");
+  const readme = await read("README.md");
 
   for (const value of [
     "pages: write",
     "id-token: write",
     "actions/configure-pages",
+    "Prepare public site",
+    "cp index.html styles.css script.js paper.pdf _site/",
     "actions/upload-pages-artifact",
-    "path: .",
+    "path: _site",
     "actions/deploy-pages"
   ]) {
     assert.match(workflow, new RegExp(escapeRegex(value)));
   }
+  assert.doesNotMatch(workflow, /path: \.$|slides\.pdf|capscope\.tex|docs\//m);
+  assert.doesNotMatch(readme, /LMPL|workshop/i);
 });
