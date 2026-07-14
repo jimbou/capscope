@@ -39,12 +39,11 @@ test("page contains the approved CapScope content", async () => {
   assert.doesNotMatch(html, /Gordian|ISSTA|2603\.19239/i);
 });
 
-test("page exposes local paper, slides, styles, script, and mark", async () => {
+test("page exposes the paper and required site assets without a slides link", async () => {
   const html = await read("index.html");
   const mark = await read("assets/capscope-mark.svg");
   const publicFiles = [
     "paper.pdf",
-    "slides.pdf",
     "styles.css",
     "script.js",
     "assets/capscope-mark.svg"
@@ -54,6 +53,7 @@ test("page exposes local paper, slides, styles, script, and mark", async () => {
     assert.match(html, new RegExp(escapeRegex(path)));
     await access(new URL(path, root));
   }
+  assert.doesNotMatch(html, /href=["']slides\.pdf["']/);
   assert.doesNotMatch(mark, /<rect[^>]+fill=["']#fff["']/i);
 });
 
