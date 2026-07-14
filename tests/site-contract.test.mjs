@@ -27,6 +27,7 @@ test("page contains the approved CapScope content", async () => {
     "68/75",
     "https://github.com/msv-lab/CapScope",
     "2501112125@stu.pku.edu.cn",
+    "https://scholar.google.com/citations?user=SAT5NjIAAAAJ&amp;hl=en",
     "2501112020@stu.pku.edu.cn",
     "https://scholar.google.com/citations?user=Ra2pxQUAAAAJ&amp;hl=en",
     "mechtaev@pku.edu.cn"
