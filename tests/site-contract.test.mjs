@@ -64,6 +64,7 @@ test("page keeps the template accessibility and interaction hooks", async () => 
   for (const value of ["skip-link", "main-content", "scroll-progress", "copy-cite", "bibtex"]) {
     assert.match(html, new RegExp(value));
   }
+  assert.match(html, /<img class="principle-mark" src="assets\/capscope-mark\.svg" alt="">/);
   assert.match(script, /IntersectionObserver/);
   assert.match(script, /navigator\.clipboard/);
   assert.match(script, /prefers-reduced-motion/);
