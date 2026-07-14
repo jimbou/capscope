@@ -1,0 +1,79 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
+
+const root = new URL("../", import.meta.url);
+const read = (path) => readFile(new URL(path, root), "utf8");
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+test("page contains the approved CapScope content", async () => {
+  const html = await read("index.html");
+  const required = [
+    "CapScope",
+    "Submitted to LMPL 2026",
+    "Authority Is Not a String",
+    "Dimitrios Stamatios Bouras",
+    "Yihan Dai",
+    "Sergey Mechtaev",
+    "Mint",
+    "Freeze",
+    "Derive",
+    "Check",
+    "300",
+    "3/75",
+    "33/75",
+    "68/75",
+    "https://github.com/msv-lab/CapScope",
+    "2501112125@stu.pku.edu.cn",
+    "2501112020@stu.pku.edu.cn",
+    "mechtaev@pku.edu.cn"
+  ];
+
+  for (const value of required) {
+    assert.match(html, new RegExp(escapeRegex(value)));
+  }
+  assert.doesNotMatch(html, /Gordian|ISSTA|2603\.19239/i);
+});
+
+test("page exposes local paper, slides, styles, script, and mark", async () => {
+  const html = await read("index.html");
+  const publicFiles = [
+    "paper.pdf",
+    "slides.pdf",
+    "styles.css",
+    "script.js",
+    "assets/capscope-mark.svg"
+  ];
+
+  for (const path of publicFiles) {
+    assert.match(html, new RegExp(escapeRegex(path)));
+    await access(new URL(path, root));
+  }
+});
+
+test("page keeps the template accessibility and interaction hooks", async () => {
+  const html = await read("index.html");
+  const script = await read("script.js");
+
+  for (const value of ["skip-link", "main-content", "scroll-progress", "copy-cite", "bibtex"]) {
+    assert.match(html, new RegExp(value));
+  }
+  assert.match(script, /IntersectionObserver/);
+  assert.match(script, /navigator\.clipboard/);
+  assert.match(script, /prefers-reduced-motion/);
+});
+
+test("Pages workflow deploys the repository root", async () => {
+  const workflow = await read(".github/workflows/pages.yml");
+
+  for (const value of [
+    "pages: write",
+    "id-token: write",
+    "actions/configure-pages",
+    "actions/upload-pages-artifact",
+    "path: .",
+    "actions/deploy-pages"
+  ]) {
+    assert.match(workflow, new RegExp(escapeRegex(value)));
+  }
+});
