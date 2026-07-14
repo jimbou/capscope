@@ -10,8 +10,10 @@ test("page contains the approved CapScope content", async () => {
   const html = await read("index.html");
   const required = [
     "CapScope",
+    "CapScope:",
     "Submitted to LMPL 2026",
     "Authority Is Not a String",
+    "A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents",
     "Dimitrios Stamatios Bouras",
     "Yihan Dai",
     "Sergey Mechtaev",
@@ -37,6 +39,7 @@ test("page contains the approved CapScope content", async () => {
 
 test("page exposes local paper, slides, styles, script, and mark", async () => {
   const html = await read("index.html");
+  const mark = await read("assets/capscope-mark.svg");
   const publicFiles = [
     "paper.pdf",
     "slides.pdf",
@@ -49,6 +52,7 @@ test("page exposes local paper, slides, styles, script, and mark", async () => {
     assert.match(html, new RegExp(escapeRegex(path)));
     await access(new URL(path, root));
   }
+  assert.doesNotMatch(mark, /<rect[^>]+fill=["']#fff["']/i);
 });
 
 test("page keeps the template accessibility and interaction hooks", async () => {

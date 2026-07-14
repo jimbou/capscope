@@ -2,7 +2,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">CapScope logo</title>
   <desc id="desc">Nested capability scopes stop an incoming unauthorized request.</desc>
-  <rect width="512" height="512" fill="#fff"/>
   <g fill="none" stroke="#000" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter">
     <!-- Task-wide authority ceiling -->
     <path d="M344 150 A150 150 0 1 0 344 362"/>
