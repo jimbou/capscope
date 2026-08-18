@@ -11,7 +11,7 @@ test("page contains the approved CapScope content", async () => {
   const required = [
     "CapScope",
     "CapScope:",
-    "Under submission",
+    "Accepted at LMPL 2026",
     "Authority Is Not a String",
     "A Capability-Scoped Harness for Prompt-Injection-Resistant Coding Agents",
     "Dimitrios Stamatios Bouras",
@@ -36,7 +36,7 @@ test("page contains the approved CapScope content", async () => {
   for (const value of required) {
     assert.match(html, new RegExp(escapeRegex(value)));
   }
-  assert.doesNotMatch(html, /Gordian|ISSTA|LMPL|workshop|2603\.19239/i);
+  assert.doesNotMatch(html, /Gordian|ISSTA|Under submission|2603\.19239/i);
 });
 
 test("page exposes the paper and required site assets without a slides link", async () => {
@@ -87,5 +87,6 @@ test("Pages workflow deploys only the staged public site", async () => {
     assert.match(workflow, new RegExp(escapeRegex(value)));
   }
   assert.doesNotMatch(workflow, /path: \.$|slides\.pdf|capscope\.tex|docs\//m);
-  assert.doesNotMatch(readme, /LMPL|workshop/i);
+  assert.match(readme, /accepted at the LMPL Workshop 2026/i);
+  assert.doesNotMatch(readme, /under submission/i);
 });
