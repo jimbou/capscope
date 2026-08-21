@@ -39,6 +39,16 @@ test("page contains the approved CapScope content", async () => {
   assert.doesNotMatch(html, /Gordian|ISSTA|Under submission|2603\.19239/i);
 });
 
+test("people cards state the approved academic roles and shared affiliation", async () => {
+  const html = await read("index.html");
+  const affiliation = "Key Laboratory of High Confidence Software Technologies, Ministry of Education, School of Computer Science, Peking University.";
+
+  assert.match(html, /<p class="person-role">First author<\/p>[\s\S]*?<h3>Dimitrios Stamatios Bouras<\/h3>[\s\S]*?<p>PhD researcher at the Key Laboratory/);
+  assert.match(html, /<p class="person-role">Co-author<\/p>[\s\S]*?<h3>Yihan Dai<\/h3>[\s\S]*?<p>PhD researcher at the Key Laboratory/);
+  assert.match(html, /<p class="person-role">Corresponding author<\/p>[\s\S]*?<h3>Sergey Mechtaev<\/h3>[\s\S]*?<p>Assistant professor at the Key Laboratory/);
+  assert.equal(html.split(affiliation).length - 1, 3);
+});
+
 test("page exposes the paper and required site assets without a slides link", async () => {
   const html = await read("index.html");
   const mark = await read("assets/capscope-mark.svg");
